@@ -6,6 +6,14 @@ public class Lava extends Water
 		super(grid);
 		color = Color.red;
 	}
+	protected void melt(int row, int col)
+	{
+	if(row +1 < grid.length && grid[row +1][col] instanceof Metal && !(grid[row +1][col] instanceof Lava))//melt metal
+	{
+		grid[row +1][col] = new Lava(grid);
+	}
+	
+	}
 	@Override 
 	public void act(int row, int col)
 	{
@@ -14,15 +22,13 @@ public class Lava extends Water
 			if(grid[row +1][col] == null)
 			{
 				swap(row, col, row +1, col);
+				melt(row, col);
 			}
 			else if (row + 2 < grid.length)
 			{
 				fall(row, col);
+				melt(row, col);
 			}
-		}
-		if(row +1 < grid.length && grid[row +1][col] instanceof Metal && !(grid[row +1][col] instanceof Lava))//melt metal
-		{
-			grid[row +1][col] = new Lava(grid);
 		}
 		if(row +1 < grid.length && grid[row +1][col] instanceof Water && !(grid[row +1][col] instanceof Lava))//turn water into obsidian
 		{

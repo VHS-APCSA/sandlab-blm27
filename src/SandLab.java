@@ -17,6 +17,7 @@ public class SandLab
 	private static final int WATER = 3;
 	private static final int SNOW = 4;
 	private static final int LAVA = 5;
+	private static final int ACID = 6;
 
 	private SandDisplay display;
 
@@ -24,13 +25,14 @@ public class SandLab
 
 	public SandLab(int numRows, int numCols)
 	{
-		String[] names = new String[6];
+		String[] names = new String[7];
 		names[EMPTY] = "Empty";
 		names[METAL] = "Metal";
 		names[SAND] = "Sand";
 		names[WATER] = "Water";
 		names[SNOW] = "Snow";
 		names[LAVA] = "Lava";
+		names[ACID] = "Acid";
 		display = new SandDisplay("Falling Sand", numRows, numCols, names);
 		grid = new Particle[numRows][numCols];
 	}
@@ -55,6 +57,9 @@ public class SandLab
 			break;
 		case LAVA:
 			particle = new Lava(grid);
+			break;
+		case ACID:
+			particle = new Acid(grid);
 			break;
 		}
 		grid[row][col] = particle;
