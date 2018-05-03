@@ -9,17 +9,28 @@ public class Acid extends Lava
 	@Override 
 	public void act(int row, int col)
 	{
-		if(row + 1 < grid.length)
-		{
-			if(grid[row +1][col] == null)
+			if(row +1 < grid.length)
 			{
-				swap(row, col, row +1, col);
+				if(grid[row +1][col] == null && Math.random() < 0.2)
+				{
+					super.act(row, col);
+				}
 			}
-			else if (row + 2 < grid.length)
+			if(row +1 < grid.length && grid[row +1][col] instanceof Lava && !(grid[row +1][col] instanceof Acid))//turn acid into lava
 			{
-				fall(row, col);
-				melt(row, col);
+				grid[row + 1][col] = new Lava(grid);
+			}
+			if(row -1 < grid.length && grid[row -1][col] instanceof Lava && !(grid[row -1][col] instanceof Acid))//turn acid into lava
+			{
+				grid[row][col] = new Lava(grid);
+			}
+			if(row +1 < grid.length && grid[row +1][col] instanceof Water && !(grid[row +1][col] instanceof Acid))//acid goes through water
+			{
+				grid[row+1][col] = new Acid(grid);
+			}
+			if(row +1 < grid.length && grid[row +1][col] instanceof Metal && !(grid[row +1][col] instanceof Acid))//melt metal
+			{
+				grid[row +1][col] = new Acid(grid);
 			}
 		}
 	}
-}
